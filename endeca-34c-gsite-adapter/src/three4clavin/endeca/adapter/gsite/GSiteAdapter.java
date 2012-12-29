@@ -146,23 +146,34 @@ public class GSiteAdapter extends BaseAdapter {
 				emit(subFile, handler);
 			}
 		}
-		
-		Record record = new Record();
-		record.add(new PVal("File.AbsolutePath", file.getAbsolutePath()));
-		record.add(new PVal("File.Name",         file.getName()));
-		record.add(new PVal("File.Parent",       file.getParent()));
-		record.add(new PVal("File.Path",         file.getPath()));
-		record.add(new PVal("File.FreeSpace",    ""+file.getFreeSpace()));
-		record.add(new PVal("File.TotalSpace",   ""+file.getTotalSpace()));
-		record.add(new PVal("File.UsableSpace",  ""+file.getUsableSpace()));
-		record.add(new PVal("File.Length",       ""+file.length()));
-		try {
-			record.add(new PVal("File.CanonicalPath", file.getCanonicalPath()));
+		else{
+			Record record = new Record();
+			record.add(new PVal("Endeca",     "Generic"));
+			record.add(new PVal("dataSource", "GSite"));
+			record.add(new PVal("dataType",   "Google Site Page"));
+			
+			record.add(new PVal("File.AbsolutePath", file.getAbsolutePath()));
+			record.add(new PVal("File.Name",         file.getName()));
+			record.add(new PVal("File.Parent",       file.getParent()));
+			record.add(new PVal("File.Path",         file.getPath()));
+			record.add(new PVal("File.FreeSpace",    ""+file.getFreeSpace()));
+			record.add(new PVal("File.TotalSpace",   ""+file.getTotalSpace()));
+			record.add(new PVal("File.UsableSpace",  ""+file.getUsableSpace()));
+			record.add(new PVal("File.Length",       ""+file.length()));
+			try {
+				record.add(new PVal("File.CanonicalPath", file.getCanonicalPath()));
+			}
+			catch (IOException e) {
+			}
+			
+			record.add(new PVal("Endeca.Id", getGoogleHost() + "/" + getGoogleDomain() + "/" + getGoogleWebspace() + "/" + file.getPath()));
+			
+			// Add props necessary for doc conversion to work
+			record.add(new PVal("Endeca.FileSystem.Path", file.getAbsolutePath()));
+			record.add(new PVal("Endeca.Document.Body",   file.getAbsolutePath()));
+			
+			handler.emit(record);
 		}
-		catch (IOException e) {
-		}
-		
-		handler.emit(record);
 	}
 	
 	private void recurseDelete(File file){

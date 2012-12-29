@@ -24,7 +24,7 @@ public class JIRAProjectUtils {
 		record.add(new PVal("dataSource", "JIRA"));
 		record.add(new PVal("dataType",   "JIRA-Project"));
 		record.add(new PVal("Endeca",     "Generic"));
-		record.add(new PVal("recordId",   "JIRA-Project-" + projectDetail.getKey()));
+		record.add(new PVal("Endeca.Id",  "JIRA-Project-" + projectDetail.getKey()));
 		
 		// ---- Gory details ----
 		record.add(new PVal("projectUrl",   "" + projectDetail.getSelf()));

@@ -40,7 +40,7 @@ public class JIRAIssueUtils {
 		record.add(new PVal("dataSource", "JIRA"));
 		record.add(new PVal("dataType",   "JIRA-Issue"));
 		record.add(new PVal("Endeca",     "Generic"));
-		record.add(new PVal("recordId",   "JIRA-Issue-" + issue.getKey()));
+		record.add(new PVal("Endeca.Id",  "JIRA-Issue-" + issue.getKey()));
 		
 		// ---- Gory details ----
 		if(issueDetail.getAffectedVersions() != null){
