@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <project default="main">
-	<property name="release-package-name" value="endeca-34c-base"/>
+	<property name="release-package-name" value="endeca-34c-adapter-base"/>
 	<property name="release-package-version" value="1.0"/>
 	<property name="lib-dir" value="lib"/>
 	
@@ -68,7 +68,7 @@
 	</target>
 	
 	<target name="release-full" description="Compression target">
-		<property name="release-full-dir" value="release/${release-package-name}-${release-package-version}"/>
+		<property name="release-full-dir" value="release/${release-package-name}-${release-package-version}-withdep"/>
 		<mkdir dir="${release-full-dir}"/>
 		
 		<echo>Building full jar file:</echo>
@@ -83,9 +83,9 @@
 		</copy>
 		<zip destfile="${release-full-dir}/../${release-package-name}-${release-package-version}-withdep.zip">
 			<fileset dir="release">
-				<include name="${release-package-name}-${release-package-version}/**/*"/>
+				<include name="${release-package-name}-${release-package-version}-withdep/**/*"/>
 			</fileset>
 		</zip>
-		<delete dir="release/${release-package-name}-${release-package-version}"/>
+		<delete dir="release/${release-package-name}-${release-package-version}-withdep"/>
 	</target>
 </project>

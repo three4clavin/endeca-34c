@@ -9,3 +9,6 @@
 */lib
 */data
 
+# GSite adapter
+*/google-bin/**/*
+
