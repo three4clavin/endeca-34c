@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<project default="main">
+	<property name="release-package-name" value="endeca-34c-base"/>
+	<property name="release-package-version" value="1.0"/>
+	<property name="lib-dir" value="lib"/>
+	
+	<property name="adapter-jar" value="${lib-dir}/adapter.jar"/>
+	
+	<path id="project.class.path">
+		<pathelement location="${adapter-jar}"/>
+	</path>
+	
+	<target name="main" depends="prepare, clean, compile, javadoc, release" description="Main target">
+		<echo>Full build complete.</echo>
+	</target>
+	
+	<target name="prepare" description="Prepare target">
+		<echo>Preparing project:</echo>
+	</target>
+	
+	<target name="clean" description="Clean target">
+		<echo>Cleaning project:</echo>
+		<delete dir="release"/>
+		<mkdir dir="release"/>
+		<delete dir="javadoc"/>
+		<mkdir dir="javadoc"/>
+		<delete dir="bin/com" />
+		<delete dir="lib"/>
+		<mkdir dir="lib"/>
+	</target>
+	
+	<target name="external-libs" description="Setup 3rd party libraries">
+		<copy todir="lib">
+			<fileset dir="external/endeca">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="compile" depends="external-libs" description="Compilation target">
+		<echo>Compiling source code:</echo>
+		<javac debug="on" srcdir="src" destdir="bin" includes="**/*" includeantruntime="false">
+			<classpath refid="project.class.path" />
+		</javac>
+	</target>
+	
+	<target name="javadoc" description="JavaDoc target">
+		<javadoc packagenames="*"
+			sourcepath="src"
+			defaultexcludes="yes"
+			destdir="javadoc"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="${release-package-name} - v${release-package-version}">
+				<classpath refid="project.class.path" />
+				<doctitle><![CDATA[<h1>34C Endeca Adapter Base Utilities</h1>]]></doctitle>
+				<bottom><![CDATA[<i>http://www.endeca.com/.</i>]]></bottom>
+		</javadoc>
+	</target>
+	
+	<target name="release" depends="release-full" description="Releasing packages">
+		<echo>Building jar file:</echo>
+		<jar jarfile="release/${release-package-name}-${release-package-version}.jar" duplicate="fail" whenmanifestonly="fail">
+			<fileset dir="bin" includes="**/*"/>
+			<fileset dir="src" includes="**/*"/>
+		</jar>
+	</target>
+	
+	<target name="release-full" description="Compression target">
+		<property name="release-full-dir" value="release/${release-package-name}-${release-package-version}"/>
+		<mkdir dir="${release-full-dir}"/>
+		
+		<echo>Building full jar file:</echo>
+		<jar jarfile="${release-full-dir}/${release-package-name}-${release-package-version}.jar" duplicate="fail" whenmanifestonly="fail">
+			<fileset dir="bin" includes="**/*"/>
+			<fileset dir="src" includes="**/*"/>
+		</jar>
+		<copy todir="${release-full-dir}">
+			<fileset dir="${lib-dir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		<zip destfile="${release-full-dir}/../${release-package-name}-${release-package-version}-withdep.zip">
+			<fileset dir="release">
+				<include name="${release-package-name}-${release-package-version}/**/*"/>
+			</fileset>
+		</zip>
+		<delete dir="release/${release-package-name}-${release-package-version}"/>
+	</target>
+</project>

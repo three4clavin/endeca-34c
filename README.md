@@ -1,4 +1,5 @@
 endeca-34c
 ==========
 
-Endeca Utilities, Adapters, etc
+	- endeca-34c-adapter-base - Base utility classes for developing Endeca content adapters
+

@@ -1,0 +1,11 @@
+# Eclipse files
+.metadata
+*/.project
+*/.settings
+*/.classpath
+
+# Java output
+*/bin/**/*
+*/lib
+*/data
+
