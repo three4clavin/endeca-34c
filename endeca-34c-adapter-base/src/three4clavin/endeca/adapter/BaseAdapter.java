@@ -1,5 +1,6 @@
 package three4clavin.endeca.adapter;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import three4clavin.util.logging.FlatFormatter;
@@ -19,7 +20,11 @@ public class BaseAdapter implements Adapter {
 	
 	public void execute(AdapterConfig config, AdapterHandler handler) throws AdapterException {
 		Record record = new Record();
-		record.add(new PVal("Hello", "World"));
+		record.add(new PVal("Endeca.Id", "Hello World"));
+		
+		File file = new File(".");
+		record.add(new PVal("Endeca.ITL.CWD",       file.getAbsolutePath()));
+		record.add(new PVal("Endeca.ITL.FreeSpace", ""+file.getFreeSpace()));
 		
 		log.info("Emitting hello world record.");
 		handler.emit(record);
